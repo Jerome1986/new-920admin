@@ -1,0 +1,75 @@
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+@use './element-table.scss';
+
+// 全局设计令牌 + Element Plus 覆盖（与 variables.scss 同系）
+:root {
+  --jel-bg: #{$jel-backGroudColor};
+  --jel-brand: #{$jel-brandColor};
+  --jel-button: #{$jel-buttonColor};
+  --jel-surface: #{$jel-surface};
+  --jel-sidebar-bg: #{$jel-sidebar-bg};
+  --jel-header-bg: #{$jel-header-bg};
+  --jel-main-tint: #{$jel-main-tint};
+  --jel-border: #{$jel-border};
+  --jel-font-title: #{$jel-font-title};
+  --jel-font-dec: #{$jel-font-dec};
+  --jel-font-dec2: #{$jel-font-dec2};
+  --jel-menu-text: #{$jel-menu-text};
+  --jel-menu-hover-bg: #{$jel-menu-hover-bg};
+  --jel-menu-active-bg: #{$jel-menu-active-bg};
+  --jel-menu-active-text: #{$jel-menu-active-text};
+  --jel-shadow-sidebar: #{$jel-shadow-sidebar};
+  --jel-bar-height: #{$jel-bar-height};
+  --jel-dialog-fixed-width: #{$jel-dialog-fixed-width};
+  --jel-dialog-body-fixed-height: #{$jel-dialog-body-fixed-height};
+
+  /* Element：主色与色阶（品牌红） */
+  --el-color-primary: #{$jel-brandColor};
+  --el-color-primary-rgb: 214, 39, 49;
+  --el-color-primary-light-3: #e04b54;
+  --el-color-primary-light-5: #ea6f76;
+  --el-color-primary-light-7: #f2a2a6;
+  --el-color-primary-light-8: #f7c4c7;
+  --el-color-primary-light-9: #fceeef;
+  --el-color-primary-dark-2: #b01f28;
+
+  --el-bg-color-page: #{$jel-backGroudColor};
+  --el-text-color-primary: #{$jel-font-title};
+  --el-text-color-regular: #334155;
+  --el-text-color-secondary: #64748b;
+  --el-text-color-placeholder: #94a3b8;
+  --el-border-color: #{$jel-border};
+  --el-border-color-light: #e8edf2;
+  --el-border-color-lighter: #eef2f6;
+  --el-fill-color-light: #f1f5f9;
+  --el-fill-color-lighter: #f8fafc;
+  --el-border-radius-base: 6px;
+}
+
+/* 固定宽度弹窗：在 <el-dialog> 上加 class="jel-dialog-fixed-shell"。
+   内容区固定高度 + 纵向滚动请使用 height: var(--jel-dialog-body-fixed-height); overflow-y: auto; */
+.el-dialog.jel-dialog-fixed-shell {
+  width: var(--jel-dialog-fixed-width) !important;
+  max-width: calc(100vw - 32px);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: var(--jel-bg);
+  box-sizing: border-box;
+  color: var(--jel-font-title);
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+image {
+  width: 100%;
+  height: 100%;
+}

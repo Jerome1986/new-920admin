@@ -1,0 +1,35 @@
+// variables.scss — 后台基础配色（品牌红 + 冷灰中性色，简洁清新）
+// —— 品牌与功能色（保留语义，供业务组件引用）——
+$jel-backGroudColor: #f7fafc;
+$jel-brandColor: #d62731; // 品牌色 / 价格强调
+$jel-buttonColor: #e8454d; // 主操作按钮（与品牌同系）
+
+$jel-font-title: #1e293b; // 标题
+$jel-font-dec: #94a3b8; // 辅助文字
+$jel-font-dec2: #64748b; // 辅助文字 2
+$jel-font-prompt: #ea580c; // 提示 / 审核中
+$jel-font-success: #16a34a; // 成功 / 待取货
+
+$jel-border: #e8edf2; // 默认边框
+
+// —— 布局与表面 ——
+$jel-bar-height: 52px; // 侧栏 Logo 行与顶栏统一高度（略低于常规 56，更紧凑）
+$jel-surface: #ffffff;
+$jel-surface-muted: #f8fafc;
+$jel-sidebar-bg: #ffffff;
+$jel-header-bg: #ffffff;
+$jel-main-tint: #f1f5f9;
+
+// —— 侧栏菜单 ——
+$jel-menu-text: #475569;
+$jel-menu-hover-bg: #f8fafc;
+$jel-menu-active-bg: #fff1f2;
+$jel-menu-active-text: $jel-brandColor;
+
+// —— 阴影 ——
+// 侧栏：整块右侧投影，压在主内容区上（Logo 与菜单共用一条边，无竖线边框）
+$jel-shadow-sidebar: 4px 0 14px -4px rgba(15, 23, 42, 0.08);
+
+// —— 固定尺寸弹窗（内容区超出纵向滚动；业务弹框统一用同一套宽高）——
+$jel-dialog-fixed-width: 680px;
+$jel-dialog-body-fixed-height: 440px;

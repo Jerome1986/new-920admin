@@ -1,0 +1,78 @@
+@use './variables.scss' as *;
+
+/**
+ * 列表页：表格区域容器（放在 PageContainer 内容区，与顶栏/分页兄弟，占满纵向剩余高度）
+ */
+.jel-page-table-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+
+  /* 多个表格/组件兄弟时（如 v-show 切换）均占满剩余高度 */
+  > * {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+/**
+ * 后台统一数据表格皮肤（边框、表头、行悬停、圆角）
+ * 与 .jel-table-fill 可同时加在 <el-table> 上
+ */
+.el-table.jel-data-table {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  --el-table-border-color: #{$jel-border};
+  --el-table-header-bg-color: #{$jel-surface-muted};
+  --el-table-header-text-color: #{$jel-font-title};
+  --el-table-row-hover-bg-color: rgba(241, 245, 249, 0.85);
+  font-size: 14px;
+  border-radius: 8px;
+
+  th.el-table__cell {
+    font-weight: 600;
+  }
+}
+
+/**
+ * 列表页表格：父级为 flex 子项且 height="100%" 时，无数据占位占满表体剩余高度并垂直居中
+ *
+ * <el-table class="jel-data-table jel-table-fill" height="100%" ...>
+ *   <template #empty>
+ *     <div class="jel-table-fill__empty"><el-empty description="暂无数据" /></div>
+ *   </template>
+ * </el-table>
+ */
+.el-table.jel-table-fill {
+  .el-table__inner-wrapper {
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .el-table__body-wrapper {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .el-table__empty-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.jel-table-fill__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: inherit;
+}
