@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+// 门店订单页：占位（与订单管理 / 店长订单区分）
+</script>
 
 <template>
   <div>

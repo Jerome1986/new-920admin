@@ -18,7 +18,7 @@ const form = ref<StoreCreateForm>({
   phone: '',
   managerId: '',
   managerName: '',
-  inventoryTemplateId: 0,
+  inventoryTemplateId: '',
 })
 
 // 店长候选：用户列表（接口待接）
@@ -140,8 +140,7 @@ onMounted(() => {
             </el-col>
             <el-col :xs="24" :md="12">
               <el-form-item label="初始化库存">
-                <el-select v-model="form.inventoryTemplateId" placeholder="可选，不选则不初始化库存模板" clearable
-                  style="width: 100%">
+                <el-select v-model="form.inventoryTemplateId" placeholder="请选择库存模版" clearable style="width: 100%">
                   <el-option v-for="opt in stockTemplateOptions" :key="opt.value" :label="opt.label"
                     :value="opt.value" />
                 </el-select>

@@ -41,3 +41,39 @@ export interface OrderListItem {
   cancelReason: string | null
   updatedAt: string
 }
+
+/** 订单商品行（order_product） */
+export interface OrderProductItem {
+  id: string
+  orderId: string
+  productId: number
+  model: string | null
+  skuNo: string
+  name: string
+  price: string
+  quantity: number
+  image: string | null
+  skuId: number | null
+  skuName: string | null
+}
+
+/** 订单收货地址（order_address） */
+export interface OrderAddressItem {
+  id: string
+  orderId: string
+  name: string
+  mobile: string
+  province: string
+  city: string
+  county: string
+  postalCode: string | null
+  nationalCode: string | null
+  detail: string
+}
+
+/** 商品订单详情：主表 + 明细 + 地址 */
+export interface OrderDetail extends OrderListItem {
+  products: OrderProductItem[]
+  address: OrderAddressItem | null
+}
+

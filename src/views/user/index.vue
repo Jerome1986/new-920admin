@@ -8,6 +8,7 @@ import { Edit, Search } from '@element-plus/icons-vue'
 import { onMounted, ref } from 'vue'
 import UserChannel from './components/UserChannel.vue'
 import type { JelUserChannel } from '@/types/Components'
+import { ElMessage } from 'element-plus'
 
 
 // 弹窗组件
@@ -80,6 +81,7 @@ const onEditChannel = (row: UserInfo) => {
 // 提交成功
 const handleSuccess = () => {
   console.log('success')
+  ElMessage.success('保存成功')
   userListGet(params.value.pageNum, params.value.pageSize)
 }
 
@@ -106,7 +108,7 @@ onMounted(() => userListGet(params.value.pageNum, params.value.pageSize))
               <img style="width: 50px; height: 50px; border-radius: 8px" :src="row.avatarUrl" alt="avatar" />
             </template>
           </el-table-column>
-          <el-table-column label="昵称" align="center" prop="nickname" width="80">
+          <el-table-column label="昵称" align="center" prop="nickname" width="120">
             <template #default="{ row }">
               {{ formatName(row.nickname) }}
             </template>

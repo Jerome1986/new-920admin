@@ -15,6 +15,8 @@ export const formatGender = (gender: number) => {
 // 角色映射
 export const formatRole = (levelText: string): string => {
   switch (levelText) {
+    case 'PLATFORM':
+      return '平台'
     case 'USER':
       return '普通用户'
     case 'VIP':

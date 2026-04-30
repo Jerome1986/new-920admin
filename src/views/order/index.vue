@@ -4,108 +4,41 @@ import OrderProductTable from './components/OrderProductTable.vue'
 import OrderVipPlaceholder from './components/OrderVipPlaceholder.vue'
 import type { OrderListItem, OrderStatus } from '@/types/order'
 import { Search } from '@element-plus/icons-vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { orderFindAllApi, orderShipApi } from '@/api/order'
 
-const loading = ref(false)
-/** 商品订单 | VIP 订单（字段不同；VIP 仅占位） */
+const router = useRouter() // 订单列表：页面跳转
+
+const loading = ref(false) // 订单列表：表格 loading
+// 订单列表：订单类型联合类型（商品 / VIP）
 type OrderPageKind = 'product' | 'vip'
 
-const orderType = ref<OrderPageKind>('product')
-const searchKeyword = ref('')
-/** 默认全部；可选回「全部」 */
-const filterStatus = ref<OrderStatus | 'ALL'>('ALL')
+const orderType = ref<OrderPageKind>('product') // 订单列表：订单类型（商品 / VIP）
+const searchKeyword = ref('') // 订单列表：搜索关键词
+const filterStatus = ref<OrderStatus | 'ALL'>('ALL') // 订单列表：订单状态筛选
 
+// 订单列表：分页
 const params = ref({
   pageNum: 1,
-  pageSize: 10,
+  pageSize: 30,
 })
 
-const total = ref(0)
+const total = ref(0) // 订单列表：总条数
 
-/** 演示数据：对接 GET /order 后替换 */
-const orderList = ref<OrderListItem[]>([])
+const orderList = ref<OrderListItem[]>([]) // 订单列表：表格数据
 
-const mockOrders: OrderListItem[] = [
-  {
-    id: 'clx01',
-    outTradeNo: 'OT2026040512000001',
-    transactionId: 'wx_tx_001',
-    status: 'PAID',
-    target: 'TOC',
-    openid: 'oABC',
-    userId: 'user_1',
-    nickname: '演示用户甲',
-    mobile: '13800138001',
-    avatarUrl: null,
-    totalCount: 3,
-    totalPrice: '299.00',
-    deductAmount: '20.00',
-    actualPayment: '279.00',
-    usedScore: 100,
-    paymentMethod: 'wechat',
-    paymentNo: 'pay_001',
-    remark: null,
-    createdAt: '2026-04-05T10:00:00.000Z',
-    paidAt: '2026-04-05T10:02:00.000Z',
-    shippedAt: null,
-    completedAt: null,
-    cancelledAt: null,
-    cancelReason: null,
-    updatedAt: '2026-04-05T10:02:00.000Z',
-  },
-  {
-    id: 'clx02',
-    outTradeNo: 'OT2026040512000002',
-    transactionId: null,
-    status: 'PENDING',
-    target: 'ALL',
-    openid: 'oDEF',
-    userId: 'user_2',
-    nickname: '演示用户乙',
-    mobile: '13900139002',
-    avatarUrl: null,
-    totalCount: 1,
-    totalPrice: '99.00',
-    deductAmount: '0.00',
-    actualPayment: '99.00',
-    usedScore: null,
-    paymentMethod: null,
-    paymentNo: null,
-    remark: '请尽快发货',
-    createdAt: '2026-04-05T11:30:00.000Z',
-    paidAt: null,
-    shippedAt: null,
-    completedAt: null,
-    cancelledAt: null,
-    cancelReason: null,
-    updatedAt: '2026-04-05T11:30:00.000Z',
-  },
-]
+// 订单列表：请求列表数据
+const orderListGet = async () => {
+  const res = await orderFindAllApi(filterStatus.value, 'TOC', params.value.pageNum, params.value.pageSize)
+  console.log('list', res)
 
-/** 拉取列表（对接接口；仅商品订单有数据） */
-const orderListGet = () => {
-  console.log('orderListGet', {
-    orderType: orderType.value,
-    params: params.value,
-    filterStatus: filterStatus.value,
-    searchKeyword: searchKeyword.value,
-  })
-  loading.value = true
-  if (orderType.value === 'vip') {
-    orderList.value = []
-    total.value = 0
-    loading.value = false
-    return
-  }
-  let list = [...mockOrders]
-  if (filterStatus.value !== 'ALL') {
-    list = list.filter((o) => o.status === filterStatus.value)
-  }
-  orderList.value = list
-  total.value = list.length
-  loading.value = false
+  orderList.value = res.data.list
+  total.value = res.data.total
 }
 
+// 订单列表：分页-每页条数
 const handleSizeChange = (size: number) => {
   console.log('handleSizeChange', size)
   params.value.pageNum = 1
@@ -113,17 +46,20 @@ const handleSizeChange = (size: number) => {
   orderListGet()
 }
 
+// 订单列表：分页-当前页
 const handleCurrentChange = (num: number) => {
   console.log('handleCurrentChange', num)
   orderListGet()
 }
 
+// 订单列表：搜索查询
 const handleSearch = () => {
   console.log('handleSearch', searchKeyword.value)
   params.value.pageNum = 1
   orderListGet()
 }
 
+// 订单列表：清空搜索
 const handleClearSearch = () => {
   console.log('handleClearSearch')
   searchKeyword.value = ''
@@ -131,22 +67,46 @@ const handleClearSearch = () => {
   orderListGet()
 }
 
+// 订单列表：订单状态变更
 const onFilterStatusChange = () => {
   console.log('onFilterStatusChange', filterStatus.value)
   params.value.pageNum = 1
   orderListGet()
 }
 
+// 订单列表：商品单 / VIP 切换
 const onOrderTypeChange = () => {
   console.log('onOrderTypeChange', orderType.value)
   params.value.pageNum = 1
   orderListGet()
 }
 
+// 订单列表：跳转详情页
 const onViewDetail = (row: OrderListItem) => {
-  console.log('onViewDetail', row)
+  console.log(row.outTradeNo)
+
+  router.push(`/order/detail/${row.outTradeNo}`)
 }
 
+// 订单列表：快捷发货（无物流表单）
+const onShipOrder = async (row: OrderListItem) => {
+  try {
+    await ElMessageBox.confirm(`确认对订单「${row.outTradeNo}」发货？`, '发货确认', {
+      type: 'warning',
+      confirmButtonText: '确认发货',
+      cancelButtonText: '取消',
+    })
+    await orderShipApi(row.outTradeNo, 'SHIPPED')
+    ElMessage.success('已发货')
+    await orderListGet()
+  } catch (e) {
+    if (e !== 'cancel') {
+      console.error(e)
+    }
+  }
+}
+
+// 订单列表：首屏拉取
 onMounted(() => orderListGet())
 </script>
 
@@ -182,12 +142,13 @@ onMounted(() => orderListGet())
 
       <OrderProductTable v-else v-model:page-num="params.pageNum" v-model:page-size="params.pageSize" :loading="loading"
         :order-list="orderList" :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange"
-        @view-detail="onViewDetail" />
+        @view-detail="onViewDetail" @ship="onShipOrder" />
     </div>
   </PageContainer>
 </template>
 
 <style scoped lang="scss">
+// 订单列表：页面根布局（与筛选区、表格区区分）
 .order-page {
   display: flex;
   flex: 1;
@@ -195,6 +156,7 @@ onMounted(() => orderListGet())
   min-height: 0;
 }
 
+// 订单列表：顶栏筛选条
 .header {
   display: flex;
   flex-wrap: wrap;
@@ -206,6 +168,7 @@ onMounted(() => orderListGet())
   border-bottom: 1px solid $jel-border;
 }
 
+// 订单列表：筛选项容器
 .filters {
   display: flex;
   flex-wrap: wrap;

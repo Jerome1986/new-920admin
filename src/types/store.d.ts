@@ -14,7 +14,7 @@ export interface StoreCreateForm {
   /** 管理员姓名 */
   managerName: string
   /** 库存模板ID */
-  inventoryTemplateId: number
+  inventoryTemplateId: string | number
 }
 
 // 门店列表类型
@@ -32,6 +32,8 @@ export interface StoreList {
   users: UserInfo[]
   /** 当前门店店长信息 */
   manager: UserInfo
+  /** 门店钱包 */
+  wallet: Wallet
   /** 创建时间 */
   createdAt: Date
 }
@@ -94,3 +96,11 @@ export interface StoreInventoryItem {
   /** 更新时间 */
   updatedAt: string
 }
+
+// 门店钱包
+export interface Wallet {
+  balance: number
+  availableBalance: number
+  frozenBalance: number
+}
+

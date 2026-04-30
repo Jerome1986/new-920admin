@@ -105,7 +105,7 @@ onMounted(() => storeListGet())
         </el-table-column>
         <el-table-column label="资金（待结算）" align="center" prop="settleBalance">
           <template #default="{ row }">
-            {{ Number(row.manager.settle_balance).toFixed(2) }}
+            {{ Number(row.wallet.balance).toFixed(2) }}
           </template>
         </el-table-column>
         <el-table-column label="创建时间" align="center" prop="createdAt">
