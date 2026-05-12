@@ -13,6 +13,8 @@ export type OrderPaymentMethod = 'wechat' | 'alipay' | 'balance'
 
 export type OrderTarget = 'TOC' | 'TOB' | 'ALL'
 
+export type StoreServiceOrderStatus = 'PENDING' | 'PAID' | 'COMPLETED' | 'CANCELLED'
+
 /** 列表页行（主表字段子集，对接接口后可直接映射） */
 export interface OrderListItem {
   id: string
@@ -77,3 +79,30 @@ export interface OrderDetail extends OrderListItem {
   address: OrderAddressItem | null
 }
 
+/** 线下贴膜订单列表行（store_service_order） */
+export interface StoreServiceOrderListItem {
+  id: string
+  storeId: string
+  userId: string | null
+  memberPhone: string | null
+  openid: string | null
+  outTradeNo: string
+  productId: number
+  productName: string | null
+  productCover: string | null
+  skuId: number
+  skuNo: string
+  originalPrice: string
+  actualPayment: string
+  paymentMethod: OrderPaymentMethod
+  status: StoreServiceOrderStatus
+  completedAt: string | null
+  cancelledAt: string | null
+  paidAt: string | null
+  remark: string | null
+  createdAt: string
+  store?: {
+    id: string
+    name: string
+  } | null
+}

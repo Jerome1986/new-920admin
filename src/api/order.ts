@@ -1,5 +1,5 @@
 import type { PageResult } from "@/types/Gobal"
-import type { OrderDetail, OrderListItem, OrderStatus, OrderTarget } from "@/types/order"
+import type { OrderDetail, OrderListItem, OrderStatus, OrderTarget, StoreServiceOrderListItem, StoreServiceOrderStatus } from "@/types/order"
 import { request } from "@/utils/request"
 
 /**
@@ -31,5 +31,19 @@ export const orderShipApi = (outTradeNo: string, status: OrderStatus) => {
     method: 'PATCH',
     url: `/order/status/${outTradeNo}`,
     data: { status }
+  })
+}
+
+/** 线下贴膜订单列表 */
+export const storeServiceOrderFindAllApi = (
+  status: StoreServiceOrderStatus | 'ALL',
+  pageNum: number,
+  pageSize: number,
+  keyword?: string
+) => {
+  return request<PageResult<StoreServiceOrderListItem>>({
+    method: 'GET',
+    url: '/store-service-order',
+    params: { status, pageNum, pageSize, keyword }
   })
 }

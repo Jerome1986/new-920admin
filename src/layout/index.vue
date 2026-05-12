@@ -77,6 +77,7 @@ const menuList = ref([
     children: [
       { name: '佣金设置', path: '/commission' },
       { name: '结算管理', path: '/settle' },
+      { name: '提现管理', path: '/withdraw' },
     ],
   },
   {

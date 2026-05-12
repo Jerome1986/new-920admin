@@ -44,6 +44,8 @@ const router = createRouter({
         // 财务中心
         { path: '/commission', component: () => import('@/views/finance/commission.vue') },
         { path: '/settle', component: () => import('@/views/finance/settle.vue') },
+        { path: '/withdraw/detail/:id', component: () => import('@/views/finance/withdraw-detail.vue') },
+        { path: '/withdraw', component: () => import('@/views/finance/withdraw.vue') },
 
         // 营销中心
         { path: '/point', component: () => import('@/views/market/point.vue') },
