@@ -72,9 +72,9 @@ onMounted(() => {
           <StoreStockPanel :inventory="inventory" />
         </el-tab-pane>
         <el-tab-pane label="会员管理" name="member">
-          <StoreMemberPanel />
+          <StoreMemberPanel :inviter-id="store.managerId" />
         </el-tab-pane>
-        <el-tab-pane label="资金管理" name="finance">
+        <el-tab-pane label="业务流水" name="finance">
           <StoreFinancePanel />
         </el-tab-pane>
       </el-tabs>

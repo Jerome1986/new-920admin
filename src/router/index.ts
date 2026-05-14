@@ -50,6 +50,7 @@ const router = createRouter({
         // 营销中心
         { path: '/point', component: () => import('@/views/market/point.vue') },
         { path: '/activity', component: () => import('@/views/market/activity.vue') },
+        { path: '/page-code', component: () => import('@/views/market/page-code.vue') },
 
         // 系统管理
         { path: '/menu', component: () => import('@/views/system/menu.vue') },

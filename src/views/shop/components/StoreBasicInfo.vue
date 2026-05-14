@@ -2,7 +2,7 @@
 import { Check, CircleClose, EditPen, User } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { computed, onMounted, ref } from 'vue'
-import type { StoreDetail } from '@/types/store';
+import type { ManagerLevel, StoreDetail } from '@/types/store';
 import { removeStoreManagerApi, setStoreManagerApi, storeEditBasicInfoApi } from '@/api/store';
 import { formatTimestamp } from '@/utils/formatTimestamp';
 
@@ -25,6 +25,12 @@ const managerDialogMode = ref<DialogMode>('assign')
 /** 当前店长展示（接接口后与详情同步；空表示无店长） */
 const managerName = ref(props.storeBasic?.managerName)
 const managerPhone = ref(props.storeBasic?.manager?.mobile)
+const managerLevel = ref<ManagerLevel | ''>('MANAGER_PRIMARY')
+
+const managerLevelOptions: { label: string; value: ManagerLevel }[] = [
+  { label: '基础店长', value: 'MANAGER_PRIMARY' },
+  { label: '高级店长', value: 'MANAGER_SENIOR' },
+]
 
 const hasManager = computed(() => !!(managerName.value))
 
@@ -130,9 +136,15 @@ async function submitManagerDialog() {
     return
   }
 
+  const selectedManagerLevel = managerLevel.value
+  if (!selectedManagerLevel) {
+    ElMessage.error('请选择店长等级')
+    return
+  }
+
   // 提交
   try {
-    await setStoreManagerApi(storeId, managerName.value, managerPhone.value)
+    await setStoreManagerApi(storeId, managerName.value, managerPhone.value, selectedManagerLevel)
     ElMessage.success('设置店长成功')
     managerDialogVisible.value = false
   } catch (err) {
@@ -261,6 +273,11 @@ async function submitManagerDialog() {
           </el-form-item>
           <el-form-item label="姓名" required>
             <el-input v-model="managerName" placeholder="请输入真实姓名"></el-input>
+          </el-form-item>
+          <el-form-item label="等级" required>
+            <el-select v-model="managerLevel" placeholder="请选择店长等级" clearable style="width: 100%">
+              <el-option v-for="opt in managerLevelOptions" :key="opt.value" :label="opt.label" :value="opt.value" />
+            </el-select>
           </el-form-item>
         </el-form>
       </template>

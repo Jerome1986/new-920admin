@@ -18,6 +18,15 @@ const params = ref({
   pageSize: 10
 })
 const total = ref(0)
+
+const formatManagerLevel = (level: StoreList['managerLevel']) => {
+  const levelMap: Record<string, string> = {
+    MANAGER_PRIMARY: '基础店长',
+    MANAGER_SENIOR: '高级店长',
+  }
+  return level ? levelMap[level] ?? level : '-'
+}
+
 // 获取门店列表
 const storeListGet = async () => {
   const res = await storeFindAll(params.value.pageNum, params.value.pageSize)
@@ -97,6 +106,11 @@ onMounted(() => storeListGet())
         <el-table-column label="门店名称" align="center" prop="name"></el-table-column>
         <el-table-column label="门店地址" align="center" prop="address"></el-table-column>
         <el-table-column label="店长" align="center" prop="managerName"></el-table-column>
+        <el-table-column label="店长等级" align="center" prop="managerLevel">
+          <template #default="{ row }">
+            {{ formatManagerLevel(row.managerLevel) }}
+          </template>
+        </el-table-column>
         <el-table-column label="联系方式" align="center" prop="phone"></el-table-column>
         <el-table-column label="会员数量" align="center" prop="settleBalance">
           <template #default="{ row }">

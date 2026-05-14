@@ -1,6 +1,8 @@
 import type { CommonStatus, UserInfo } from '@/types/User'
 import type { StockModel } from './stockModel'
 
+export type ManagerLevel = 'MANAGER_PRIMARY' | 'MANAGER_SENIOR'
+
 // 新增门店表单类型
 export interface StoreCreateForm {
   /** 门店名称 */
@@ -13,6 +15,8 @@ export interface StoreCreateForm {
   managerId: string
   /** 管理员姓名 */
   managerName: string
+  /** 店长等级 */
+  managerLevel: ManagerLevel
   /** 库存模板ID */
   inventoryTemplateId: string | number
 }
@@ -22,20 +26,38 @@ export interface StoreList {
   id: string
   /** 门店名称 */
   name: string
+  /** 门店 Logo */
+  logo: string | null
   /** 门店地址 */
   address: string
-  /** 管理员姓名 */
-  managerName: string
   /** 门店联系电话 */
   phone: string
+  /** 收款二维码 */
+  qrCodeUrl: string | null
+  /** 管理员用户ID */
+  managerId: string | null
+  /** 管理员姓名 */
+  managerName: string | null
+  /** 店长等级 */
+  managerLevel: ManagerLevel | null
+  /** 上级门店ID */
+  parentStoreId: string | null
+  /** 门店状态 */
+  status: CommonStatus
+  /** 门店编码 */
+  storeCode: string | null
+  /** 库存模板ID */
+  inventoryTemplateId: number | null
   /** 当前门店下的所有会员 */
   users: UserInfo[]
   /** 当前门店店长信息 */
-  manager: UserInfo
+  manager: UserInfo | null
   /** 门店钱包 */
   wallet: Wallet
   /** 创建时间 */
-  createdAt: Date
+  createdAt: string
+  /** 更新时间 */
+  updatedAt: string
 }
 
 // 门店详情
@@ -48,6 +70,7 @@ export interface StoreDetail {
   qrCodeUrl: string | null
   managerId: string
   managerName: string | null
+  managerLevel: ManagerLevel | null
   manager: UserInfo
   parentStoreId: string | null
   status: CommonStatus
@@ -99,8 +122,10 @@ export interface StoreInventoryItem {
 
 // 门店钱包
 export interface Wallet {
-  balance: number
-  availableBalance: number
-  frozenBalance: number
+  userId: string
+  balance: string | number
+  availableBalance: string | number
+  frozenBalance: string | number
+  updatedAt: string
 }
 

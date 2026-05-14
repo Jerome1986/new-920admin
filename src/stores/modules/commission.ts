@@ -6,7 +6,7 @@ import { commissionRuleFind } from '@/api/commissionRule'
 export const useCommissionStore = defineStore('commission', () => {
   // 佣金参数
   const commission = ref<CommissionRule>({
-    id: 0,
+    id: '',
     level1Rate: '0',
     level2Rate: '0',
     platformRate: '0',

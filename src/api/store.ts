@@ -1,5 +1,6 @@
 import type { PageResult } from "@/types/Gobal";
-import type { StoreCreateForm, StoreDetail, StoreList } from "@/types/store";
+import type { ManagerLevel, StoreCreateForm, StoreDetail, StoreList } from "@/types/store";
+import type { UserInfo } from "@/types/User";
 import { request } from "@/utils/request";
 
 /**
@@ -23,6 +24,20 @@ export const storeFindAll = (pageNum: number, pageSize: number) => {
   return request<PageResult<StoreList>>({
     method: 'GET',
     url: '/store',
+    params: { pageNum, pageSize }
+  })
+}
+
+/**
+ * 获取门店会员用户
+ * @param inviterId 店长用户ID
+ * @param pageNum
+ * @param pageSize
+ */
+export const storeVipFindAll = (inviterId: string, pageNum: number, pageSize: number) => {
+  return request<PageResult<UserInfo>>({
+    method: 'GET',
+    url: `/store/vip/${inviterId}`,
     params: { pageNum, pageSize }
   })
 }
@@ -80,11 +95,12 @@ export const removeStoreManagerApi = (storeId: string, managerId: string) => {
  * @param storeId 
  * @param managerName 
  * @param managerPhone 
+ * @param managerLevel
  */
-export const setStoreManagerApi = (storeId: string, managerName: string, managerPhone: string) => {
+export const setStoreManagerApi = (storeId: string, managerName: string, managerPhone: string, managerLevel: ManagerLevel) => {
   return request<StoreDetail>({
     method: 'PATCH',
     url: `/store/setManager/${storeId}`,
-    data: { managerName, managerPhone }
+    data: { managerName, managerPhone, managerLevel }
   })
 }

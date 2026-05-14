@@ -24,8 +24,10 @@ export interface LoginResult {
  * - USER: 普通用户
  * - VIP: 会员
  * - MANAGER: 店长
+ * - MANAGER_PRIMARY: 基础店长
+ * - MANAGER_SENIOR: 高级店长
  */
-export type UserRole = 'USER' | 'VIP' | 'MANAGER'
+export type UserRole = 'USER' | 'VIP' | 'MANAGER' | 'MANAGER_PRIMARY' | 'MANAGER_SENIOR'
 
 /**
  * 通用状态枚举
@@ -64,6 +66,8 @@ export interface UserInfo {
   referralCode: string;
   /** 上级ID */
   inviterId: string
+  /** 上级邀请码 */
+  inviterCode?: string
   /** vip可绑定的人数，默认为1 */
   vipMaxUsers: number;
   /** 会员等级： 1:基础会员, 2:高级会员, 3:至尊会员 */

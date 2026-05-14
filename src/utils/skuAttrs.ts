@@ -45,7 +45,8 @@ export function parseSkuAttrsToLabelValue(attrs: unknown): { label: string; valu
   }
   const entries = Object.entries(o)
   if (entries.length === 1) {
-    return { label: entries[0][0], value: String(entries[0][1] ?? '') }
+    const [label, value] = entries[0]!
+    return { label, value: String(value ?? '') }
   }
   return { label: '规格', value: formatSkuAttrsDisplay(attrs) }
 }

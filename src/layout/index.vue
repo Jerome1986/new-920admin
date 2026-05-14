@@ -86,6 +86,7 @@ const menuList = ref([
     children: [
       { name: '积分管理', path: '/point' },
       { name: '活动管理', path: '/activity' },
+      { name: '小程序码', path: '/page-code' },
     ],
   },
   {

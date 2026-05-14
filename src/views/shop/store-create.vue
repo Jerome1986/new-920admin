@@ -18,11 +18,17 @@ const form = ref<StoreCreateForm>({
   phone: '',
   managerId: '',
   managerName: '',
+  managerLevel: 'MANAGER_PRIMARY',
   inventoryTemplateId: '',
 })
 
 // 店长候选：用户列表（接口待接）
 const managerUserOptions = ref<{ label: string; value: string | number }[]>([])
+
+const managerLevelOptions = [
+  { label: '基础店长', value: 'MANAGER_PRIMARY' },
+  { label: '高级店长', value: 'MANAGER_SENIOR' },
+]
 
 // 库存模板下拉（接口待接）
 const stockTemplateOptions = ref<{ label: string; value: string | number }[]>([])
@@ -136,6 +142,14 @@ onMounted(() => {
             <el-col :xs="24" :md="12">
               <el-form-item label="店长姓名">
                 <el-input v-model="form.managerName" placeholder="请输入店长真实姓名" maxlength="32" show-word-limit clearable />
+              </el-form-item>
+            </el-col>
+            <el-col :xs="24" :md="12">
+              <el-form-item label="店长等级" required>
+                <el-select v-model="form.managerLevel" placeholder="请选择店长等级" clearable style="width: 100%">
+                  <el-option v-for="opt in managerLevelOptions" :key="opt.value" :label="opt.label"
+                    :value="opt.value" />
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :xs="24" :md="12">

@@ -68,6 +68,8 @@ const userList = ref<UserInfo[]>([])
 const userListGet = async (pageNum: number, pageSize: number, role: UserRole) => {
   loading.value = true
   const res = await userFindAll(pageNum, pageSize, role)
+  console.log(res)
+
   userList.value = res.data.list
   total.value = res.data.total
   loading.value = false
@@ -100,7 +102,8 @@ onMounted(() => userListGet(params.value.pageNum, params.value.pageSize, 'VIP'))
         </div>
       </div>
       <div class="jel-page-table-wrap">
-        <el-table :data="userList" class="jel-data-table jel-table-fill" height="100%" style="width: 100%" v-loading="loading" border>
+        <el-table :data="userList" class="jel-data-table jel-table-fill" height="100%" style="width: 100%"
+          v-loading="loading" border>
           <el-table-column label="序号" align="center" width="60" type="index"></el-table-column>
           <el-table-column label="头像" align="center" prop="avatarUrl" width="80">
             <template #default="{ row }">
@@ -126,7 +129,7 @@ onMounted(() => userListGet(params.value.pageNum, params.value.pageSize, 'VIP'))
           <el-table-column label="邀请码" align="center" prop="referralCode"></el-table-column>
           <el-table-column label="上级" align="center" prop="inviterCode">
             <template #default="{ row }">
-              {{ row.inviterCode ? row.inviterCode : '无' }}
+              {{ row.inviter.mobile ?? '无' }}
             </template>
           </el-table-column>
           <el-table-column label="积分" align="center" prop="score"> </el-table-column>
