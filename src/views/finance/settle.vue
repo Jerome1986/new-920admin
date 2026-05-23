@@ -9,7 +9,7 @@ import { Refresh, Search, View } from '@element-plus/icons-vue'
 // 结算列表：表格加载状态
 const loading = ref(false)
 
-// 结算列表：关键词筛选（订单ID / 门店ID / 店长ID）
+// 结算列表：关键词筛选（订单ID / 店长电话）
 const keyword = ref('')
 
 // 结算列表：状态筛选
@@ -86,6 +86,8 @@ const settlementListGet = async () => {
   try {
     const queryParams = buildQueryParams()
     const res = await settlementRecordFindAllApi(queryParams)
+    console.log('settle', res)
+
     settlementList.value = res.data.list
     total.value = res.data.total
     console.log('settlement list get', queryParams)
@@ -143,7 +145,7 @@ onMounted(() => settlementListGet())
             <el-option label="已取消" value="CANCELLED" />
             <el-option label="已退款" value="REFUNDED" />
           </el-select>
-          <el-input v-model="keyword" class="search-input" placeholder="订单ID / 门店ID / 店长ID" clearable
+          <el-input v-model="keyword" class="search-input" placeholder="订单ID / 店长电话" clearable
             @clear="handleSearch" />
           <el-date-picker v-model="createdRange" class="date-range" type="daterange" range-separator="至"
             start-placeholder="创建开始" end-placeholder="创建结束" />
@@ -157,8 +159,7 @@ onMounted(() => settlementListGet())
           v-loading="loading" border>
           <el-table-column label="序号" align="center" type="index" width="60" />
           <el-table-column label="订单ID" align="center" prop="orderId" min-width="160" show-overflow-tooltip />
-          <el-table-column label="门店ID" align="center" prop="storeId" min-width="180" show-overflow-tooltip />
-          <el-table-column label="店长ID" align="center" prop="managerId" min-width="180" show-overflow-tooltip />
+          <el-table-column label="店长电话" align="center" prop="managerPhone" width="140" show-overflow-tooltip />
           <el-table-column label="订单金额" align="center" prop="orderAmount" width="120">
             <template #default="{ row }">
               <span class="money-text">{{ formatMoney(row.orderAmount) }}</span>
