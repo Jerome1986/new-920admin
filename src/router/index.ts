@@ -33,6 +33,8 @@ const router = createRouter({
 
         // 用户中心
         { path: '/user', component: () => import('@/views/user/index.vue') },
+        { path: '/agent', component: () => import('@/views/user/agent.vue') },
+        { path: '/agent/invites/:userId', component: () => import('@/views/user/agent-invites.vue') },
         { path: '/member', component: () => import('@/views/user/member.vue') },
 
         // 门店中心

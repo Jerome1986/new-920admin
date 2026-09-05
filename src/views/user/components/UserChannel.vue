@@ -165,10 +165,13 @@ defineExpose({ open })
 .user-channel-dialog__scroll {
   box-sizing: border-box;
   width: 100%;
-  height: $jel-dialog-body-fixed-height;
+  height: min(#{$jel-dialog-body-fixed-height}, calc(100vh - 180px));
+  min-height: 0;
   padding: 20px 20px 8px;
   overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: $jel-surface;
 
   /* 滚动条与页面主色协调 */

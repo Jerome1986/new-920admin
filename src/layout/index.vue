@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores'
@@ -26,10 +26,9 @@ async function handleLogout() {
 }
 
 /** 侧栏当前激活路由 */
-const activeMenu = ref(route.path)
+const activeMenu = computed(() => route.path.startsWith('/agent/invites/') ? '/agent' : route.path)
 
 function handleMenuSelect(index: string) {
-  activeMenu.value = index
   router.push(index)
 }
 
@@ -60,6 +59,7 @@ const menuList = ref([
     icon: 'icon-customer',
     children: [
       { name: '用户管理', path: '/user' },
+      { name: '代理管理', path: '/agent' },
       { name: '会员体系', path: '/member' },
     ],
   },
@@ -109,7 +109,7 @@ const menuList = ref([
       </div>
 
       <!-- 导航菜单 -->
-      <el-menu v-model="activeMenu" background-color="var(--jel-sidebar-bg)" text-color="var(--jel-menu-text)"
+      <el-menu :default-active="activeMenu" background-color="var(--jel-sidebar-bg)" text-color="var(--jel-menu-text)"
         active-text-color="var(--jel-menu-active-text)" @select="handleMenuSelect">
         <el-sub-menu v-for="(group, idx) in menuList" :key="idx" :index="String(idx)">
           <template #title>

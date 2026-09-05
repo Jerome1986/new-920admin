@@ -17,8 +17,8 @@ import router from '@/router'
 import { useUserStore } from '@/stores'
 
 // ======================== 基础配置 ========================
-// export const baseURL = 'http://localhost:3000/api'
-export const baseURL = 'https://api.920keji.com/api'
+export const baseURL = 'http://localhost:3000/api'
+// export const baseURL = 'https://api.920keji.com/api'
 
 const instance: AxiosInstance = axios.create({
   baseURL,
