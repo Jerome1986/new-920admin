@@ -6,12 +6,13 @@ export interface SettlementRecordItem {
   id: number
   storeId: string
   managerId: string
+  managerPhone: string
   orderId: string
-  orderAmount: number
-  platformRate: number
-  platformFee: number
-  managerIncome: number
-  totalCommission: number
+  orderAmount: number | string
+  platformRate: number | string
+  platformFee: number | string
+  managerIncome: number | string
+  totalCommission: number | string
   status: SettlementStatus
   settledAt: Date | string | null
   createdAt: Date | string
